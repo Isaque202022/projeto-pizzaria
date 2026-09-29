@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: default;
+}
+body {
+    position: relative;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#voltar-homepage {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+#formulario {
+    width: 400px;
+    background-color: orange;
+    h1 {text-align: center;}
+    padding: 10px;
+    border-radius: 7px;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.308);
+}
+
+#campos-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    box-sizing: border-box;
+
+    #id-cliente {
+        padding: 0 5px;
+        background-color: rgba(0, 0, 0, 0.553);
+        border-radius: 2px;
+        color: rgb(214, 214, 214);
+        font-weight: bold;
+    }
+    .linha {
+        display: flex;
+        align-items: center;
+        box-sizing: border-box;
+        margin: 5px 0;
+    }
+    input,button {
+        padding: 4px;
+    }
+    #cpf, #telefone {
+        text-align: right;
+    }
+    
+    label {
+        margin-right: 5px;
+    }
+    #btn-salvar,#btn-cancelar {
+        margin-left: 5px;
+    }
+}
+
+#container-tabela {
+    margin: 20px 0;
+    max-height: 400px;
+    overflow: auto;
+}
+table {
+    border-collapse: separate;
+    border-spacing: 0; 
+    td, th {
+        border: 1px solid rgb(67, 66, 66);
+        padding: 5px;
+    }
+    thead {
+        border: 1px solid black;
+    }
+    th {
+        position: sticky;
+        top: 0;
+        background-color: orange;
+    }
+    .cliente {
+        .tb-cliente-cpf, .tb-cliente-telefone{
+            text-align: right;
+        }
+        .tb-cliente-editar {
+            text-align: center;
+            span {
+                cursor: pointer;
+            }
+        }
+    }
+    .item-editando {
+        background-color: yellow;
+    }
+}

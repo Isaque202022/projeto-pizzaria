@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário cliente</title>
+    <link rel="stylesheet" href="/css/formulario-cliente.css">
+</head>
+<body>
+    <a href="/">
+        <p id="voltar-homepage" title="Voltar à homepage">↩️</p>
+    </a>
+    <div id="formulario">
+        <h1>Formulário cliente 👤</h1>
+        <div id="campos-container">
+            <div class="linha">
+                <p>ID_CLIENTE: <span id="id-cliente">#</span></p>
+            </div>
+            <div class="linha">
+                <label for="nome">Nome:</label>
+                <input id="nome">
+            </div>
+            <div class="linha">
+                <label for="cpf">CPF:</label>
+                <input id="cpf" placeholder="000.000.000-00">
+            </div>
+            <div class="linha">
+                <label for="telefone">Telefone:</label>
+                <input id="telefone" placeholder="(00) 00000-0000">
+            </div>
+            <div class="linha">
+                <button id="btn-excluir" disabled onclick="excluir()">Excluir</button>
+                <button id="btn-cancelar" disabled onclick="cancelar()">Cancelar</button>
+                <button id="btn-salvar" onclick="salvar()">Salvar</button>
+            </div>
+        </div>
+    </div>
+    <div id="container-tabela">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>nome</th>
+                    <th>cpf</th>
+                    <th>telefone</th>
+                    <th>editar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/imask"></script>
+    <script src="/javascript/formulario-cliente.js"></script>
+</body>
+</html>

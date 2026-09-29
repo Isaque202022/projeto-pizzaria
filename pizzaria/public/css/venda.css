@@ -1,0 +1,170 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    cursor: default;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+    padding: 15px;
+    position: relative;
+}
+#voltar-homepage {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+.cabecalho {
+    display: flex;
+    /* height: 400px; */
+    /* background-color: rgb(238, 142, 107); */
+    justify-content: center;
+    gap: 50px;
+    .botoes {
+        text-align: right;
+    }
+    .botoes button {
+        font-size: 1.8rem;
+    }
+    .titulo-venda {
+        font-size: 0.8rem;
+        text-align: center;
+        display: grid;
+        grid-template-columns: auto auto;
+        /* background-color: lightblue; */
+
+        input {
+            padding: 3px;
+            width: 80px;
+            margin: 3px 0;
+        }
+    }
+    .container-obs {
+        textarea {
+            height: 100%;
+            width: 400px;
+            padding: 3px;
+            resize: none;
+        }
+    }
+    .botoes, .container-obs {
+        flex: 1;
+    }
+}
+
+.corpo {
+    .barra-navegacao {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+        .nav-btn {
+            background-color: lightgray;
+            padding: 6px 10px;
+            border-radius: 100px;
+            margin: 0 5px;
+            cursor: pointer;
+            label {cursor: pointer;}
+            transition: opacity 0.3s;
+        }
+        .nav-btn:hover {
+            opacity: 0.8;
+        }
+        .navegacao-selected {
+            background-color: rgb(165, 44, 8);
+            color: whitesmoke;
+        }
+    }
+    #corpo-navegacao-pagamento {
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .formulario {
+            width: 300px;
+            display: grid;
+            grid-template-columns: auto auto;
+            row-gap: 10px;
+            align-items: baseline;
+            label {
+                text-align: right;
+                margin-right: 5px;
+            }
+            select, input {
+                padding: 4px;
+            }
+            input {
+                text-align: right;  
+            }
+            .campos-cartao > *{
+                display: block;
+                width: 100%;
+            }
+        }
+        .status {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .status div {
+            background-color: lightblue;
+            padding: 4px;
+            border-radius: 5px;
+        }
+        .status span {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+    }
+    
+    #corpo-navegacao-carrinho, #corpo-navegacao-cardapio {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        .container-tabela {
+            max-height: 400px;
+            overflow: auto;
+        }
+        table {
+            border-collapse: separate;
+            border-spacing: 0;
+
+            td,th {
+                border: 1px solid black;
+                padding: 5px;
+            }
+            th {
+                position: sticky;
+                top: 0;
+                background-color: rgb(164, 179, 193);
+            }
+        }
+        .editando-linha {
+            input {
+                width: 80px;
+                padding:5px;
+                box-sizing: border-box;
+                text-align: right;
+            }
+            th {
+                background-color: rgb(242, 229, 48);
+            }
+            
+        }
+        .acoes {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-left: 20px;
+            button {
+                padding: 5px;
+            }
+        }
+        
+    }
+    
+}
+.esconder {
+    display: none !important;
+}

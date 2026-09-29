@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário produto</title>
+    <link rel="stylesheet" href="/css/formulario-produto.css">
+</head>
+<body>
+    <a href="/">
+        <p id="voltar-homepage" title="Voltar à homepage">↩️</p>
+    </a>
+    <div id="formulario">
+        <h1>Formulário produto 📦</h1>
+        <div id="campos-container">
+            <div class="linha">
+                <p>ID_PRODUTO: <span id="id-produto">#</span></p>
+            </div>
+            <div class="linha">
+                <label for="descricao">Descrição:</label>
+                <input id="descricao">
+            </div>
+            <div class="linha">
+                <label for="valor">Valor:</label>
+                <input id="valor" type="text" placeholder="0,00">
+                <span id="treinando-mascara"></span>
+            </div>
+            <div class="linha">
+                <button id="btn-excluir" disabled onclick="excluir()">Excluir</button>
+                <button id="btn-cancelar" disabled onclick="cancelar()">Cancelar</button>
+                <button id="btn-salvar" onclick="salvar()">Salvar</button>
+                
+            </div>
+        </div>
+    </div>
+    <div id="container-tabela">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>descrição</th>
+                    <th>valor</th>
+                    <th>editar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/imask"></script>
+    <script src="/javascript/formulario-produto.js"></script>
+</body>
+</html>

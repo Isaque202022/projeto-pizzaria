@@ -1,0 +1,13 @@
+* {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  cursor: default;
+}
+h1 {
+  color: orange;
+}
+.pagina button {
+  width: 200px;
+  height: 50px;
+  padding: 5px;
+  margin-bottom: 5px;
+}

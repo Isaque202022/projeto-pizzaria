@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de venda</title>
+    <link rel="stylesheet" href="/css/venda.css">
+</head>
+<body>
+    <a href="/">
+        <p id="voltar-homepage" title="Voltar à homepage">↩️</p>
+    </a>
+    <div class="cabecalho">
+        <div class="botoes">
+            <button>💾</button>
+            <button>🆕</button>
+            <button>🗂️</button>
+        </div>
+        <div class="titulo-venda">
+            <h1>Venda</h1>
+            <input type="text">
+            <h3>01/05/2025</h3>
+            
+        </div>
+        <div class="container-obs">
+            <textarea></textarea>
+        </div>
+    </div>
+    <div class="corpo">
+        <div class="barra-navegacao">
+            <div class="nav-btn" id="cardapio-btn">
+                <label for="corpo-navegacao-cardapio">Cardápio</label>
+            </div>
+            <div class="nav-btn" id="carrinho-btn">
+                <label for="corpo-navegacao-carrinho">Carrinho</label>
+            </div>
+            <div class="nav-btn" id="pagamento-btn">
+                <label for="corpo-navegacao-pagamento">Forma de pagamento</label>
+            </div>
+        </div>
+        <div class="esconder" id="corpo-navegacao-pagamento">
+            <div class="formulario">
+                <label for="dinheiro">Dinheiro:</label>
+                <input id="dinheiro" placeholder="00,00">
+
+                <label for="pix">Pix:</label>
+                <input id="pix" placeholder="00,00">
+
+                <label for="cartao">Cartão:</label>
+                <div class="campos-cartao">
+                    <select id="cartao">
+                        <option value="">-- bandeira --</option>
+                        <option value="">ELO CRÉDITO</option>
+                        <option value="">ELO DÉBITO</option>
+                        <option value="">MASTER CRÉDITO</option>
+                        <option value="">MASTER DÉBITO</option>
+                        <option value="">VISA CRÉDITO</option>
+                        <option value="">VISA DÉBITO</option>
+                    </select>
+                    <input type="number" placeholder="00,00">
+                    <input type="number" placeholder="Parcelas">
+                </div>
+            </div>
+            <div class="status">
+                <div id="total">TOTAL: <span>R$ 542,00</span></div>
+                <div id="recebido">RECEBIDO: <span>R$ 130,00</span></div>
+                <div id="falta">FALTA: <span>R$ 412,00</span></div>
+                <div id="troco">TROCO: <span>R$ 0,00</span></div>
+            </div>
+        </div>
+
+        <div class="esconder" id="corpo-navegacao-carrinho">
+            <div class="container-tabela">
+                <table>
+                    <thead>
+                        <tr class="editando-linha">
+                            <th>1</th>
+                            <th>PIZZA M - FRANGO COM CATUPIRY</th>
+                            <th><input value="55,00"></th>
+                            <th><input value="1"></th>
+                            <th>R$ 110,00</th>
+                        </tr>
+                        <tr>
+                            <th>id</th>
+                            <th>descrição</th>
+                            <th>valor</th>
+                            <th>quantidade</th>
+                            <th>total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                            <td>2</td>
+                            <td>R$ 110,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="acoes">
+                <button>Editar✏️</button>
+                <button>Remover✖️</button>
+            </div>
+        </div>
+        
+        <div id="corpo-navegacao-cardapio">
+            <div class="container-tabela">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>descrição</th>
+                            <th>valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
+                            <td>R$ 55,00</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="acoes">
+                <button>Adicionar➕</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascript/venda.js"></script>
+</body>
+</html>
