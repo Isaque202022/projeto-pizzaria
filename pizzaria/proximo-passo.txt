@@ -1,0 +1,4 @@
+PRÓXIMOS PASSOS:
+
+1 - criar uma funcao para fechar edição do carrinho, e aciona-la quando mudar de tela
+2 - em carrinho, impedir de selecionar outras linhas quando já tiver uma sendo editada

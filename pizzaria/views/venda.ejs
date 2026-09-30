@@ -73,7 +73,7 @@
             <div class="container-tabela">
                 <table>
                     <thead>
-                        <tr class="editando-linha">
+                        <tr class="editando-linha esconder">
                             <th>1</th>
                             <th>PIZZA M - FRANGO COM CATUPIRY</th>
                             <th><input value="55,00"></th>
@@ -88,132 +88,12 @@
                             <th>total</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                            <td>2</td>
-                            <td>R$ 110,00</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="acoes">
-                <button>Editar✏️</button>
-                <button>Remover✖️</button>
+                <button onclick="editarCarrinho()">Editar✏️</button>
+                <button onclick="removerFromCart()">Remover✖️</button>
             </div>
         </div>
         
@@ -227,17 +107,11 @@
                             <th>valor</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>PIZZA M - FRANGO COM CATUPIRY</td>
-                            <td>R$ 55,00</td>
-                        </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="acoes">
-                <button>Adicionar➕</button>
+                <button onclick="addToCart()">Adicionar➕</button>
             </div>
         </div>
     </div>
