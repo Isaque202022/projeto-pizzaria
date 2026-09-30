@@ -21,6 +21,7 @@ navBtns.forEach(nav => {
         id = btnPaginaAberta.querySelector('label').htmlFor
         document.getElementById(id).classList.remove('esconder')
         selecionarItem()
+        fecharEdicaoCarrinho()
     })
 })
 
@@ -87,7 +88,14 @@ function editarCarrinho(){
         }"></th>
         <th><input value="${produto.quantidade}"></th>
         <th>${formatoMoeda.format(produto.valor * produto.quantidade)}</th>
-    `;    
+    `;   
+    document.getElementById('btn-cancelar-edicao').classList.remove('esconder') 
+}
+function fecharEdicaoCarrinho(){
+    idItemSelecionado = null
+    editandoLinhaE.classList.add('esconder')
+    editandoLinhaE.innerHTML = ''
+    document.getElementById('btn-cancelar-edicao').classList.add('esconder') 
 }
 function removerFromCart(){
     if (idItemSelecionado == null) {
@@ -103,6 +111,7 @@ function removerFromCart(){
     renderizarCarrinho()
 }
 function selecionarItem(id, linha){
+    if (!editandoLinhaE.classList.contains('esconder')) return
     const previamenteSelecionado = document.querySelector('.selecionado')
     if (previamenteSelecionado) previamenteSelecionado.classList.remove('selecionado')
     if (typeof(id) === 'undefined') {
