@@ -142,6 +142,9 @@ body {
             .prod-valor, .prod-id, .prod-quant, .prod-total {
                 text-align: right;
             }
+            .prod-num-item{
+                color: gray;
+            }
         }
         .selecionado {
             background-color: yellow;

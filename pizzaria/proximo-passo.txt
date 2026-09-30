@@ -4,7 +4,7 @@ Na tela de vendas...
 1 (ok) - criar uma funcao para fechar edição do carrinho, e aciona-la quando mudar de tela 
 2 (ok) - em carrinho, impedir de selecionar outras linhas quando já tiver uma sendo editada
 3 (ok) - na tela de carrinho criar um botao de cancelar edicao que só estará visível quando um item estiver em edicao
-4 - criar mascara dos inputs da edicao
-5 - criar listeners para os dois inputs da edicao (keyup) e handle enter (pois será assim que salvará as modificações de edição)
-6 - na edicao, quando clicar em enter, chama uma funcao de salvarEdicao(), e dentro dela primeiro chama uma outra funcao de validar os campos
-...
+4 (ok) - criar mascara dos inputs da edicao
+5 (ok) - criar listeners para os dois inputs da edicao (keyup) e handle enter (pois será assim que salvará as modificações de edição)
+6 (ok) - na edicao, quando clicar em enter, chama uma funcao de salvarEdicao(), e dentro dela primeiro chama uma outra funcao de validar os campos
+7 - resolver problema: ao adicionar um mesmo produto duas vezes ao carrinho, e depois editar um desses dois e salvar, o programa está editando os dois itens no carrinho e não um só!
