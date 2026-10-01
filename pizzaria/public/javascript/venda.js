@@ -6,12 +6,43 @@ const editandoLinhaE = document.querySelector('.editando-linha')
 let produtos = []
 let carrinho = []
 let idItemSelecionado = null
+const imaskOptions = {
+    valor: {
+        mask: Number,
+        scale: 2,
+        thousandsSeparator: '.',
+        padFractionalZeros: true,
+        radix: ',',
+        min: 0
+    },
+    qtd: {
+        mask: /^\d*$/,
+        scale: 0
+    }
+}
 let carrinhoItemIdDisponivel = []
 const formatoMoeda = Intl.NumberFormat("pt-BR", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
 })
 let edicaoInputs = {}
+const optionsSelectPagamento = {
+    bandeiras: [
+        {id:1, bandeira: 'ELO', cartao: 'CRÉDITO'},
+        {id:2, bandeira: 'ELO', cartao: 'DÉBITO'},
+        {id:3, bandeira: 'MASTERCARD', cartao: 'CRÉDITO'},
+        {id:4, bandeira: 'MASTERCARD', cartao: 'DÉBITO'},
+        {id:5, bandeira: 'VISA', cartao: 'CRÉDITO'},
+        {id:6, bandeira: 'VISA', cartao: 'DÉBITO'},
+    ],
+    forma: [
+        {id:1, forma:'DINHEIRO'},
+        {id:2, forma:'PIX'},
+        {id:3, forma:'CARTÃO'},
+    ]
+}
+const elementosPagamento = {}
+let pagamentosLancados = []
 
 navBtns.forEach(nav => {
     nav.addEventListener('click', ()=>{
@@ -142,17 +173,8 @@ function editarCarrinho(){
     // criar as mascaras dos inputs de editar item carrinho
     edicaoInputs.valor = document.getElementById('carrinho-edit-valor'),
     edicaoInputs.qtd = document.getElementById('carrinho-edit-qtd')
-    edicaoInputs.maskQtd = IMask(edicaoInputs.qtd, {
-        mask: Number,
-        scale: 0
-    })
-    edicaoInputs.maskValor = IMask(edicaoInputs.valor, {
-        mask: Number,
-        scale: 2,
-        thousandsSeparator: '.',
-        padFractionalZeros: true,
-        radix: ','
-    })
+    edicaoInputs.maskQtd = IMask(edicaoInputs.qtd, imaskOptions.qtd)
+    edicaoInputs.maskValor = IMask(edicaoInputs.valor, imaskOptions.valor)
     edicaoInputs.qtd.focus()
     edicaoInputs.qtd.select()
     function inputModificado(evento) {
@@ -210,3 +232,25 @@ function removerFromCart(){
     renderizarCarrinho()
 }
 // Carrinho - fim
+
+// Forma de pagamento - início
+elementosPagamento.selectForma = document.getElementById('select-forma-pagamento')
+elementosPagamento.inputMaksValor = IMask(document.getElementById('input-valor-pagamento'),imaskOptions.valor)
+elementosPagamento.selectBandeira = document.getElementById('select-bandeira-pagamento')
+elementosPagamento.inputMaskParcelas = IMask(document.getElementById('input-parcelas-pagamento'),imaskOptions.qtd)
+
+function renderizarPagamentosLancados() {
+    let html = ''
+    pagamentosLancados.forEach(pagamento => {
+        html += `
+        <tr>
+            <td class="pag-forma">dinheiro</td>
+            <td class="pag-valor">565416560,00</td>
+            <td class="pag-bandeira"></td>
+            <td class="pag-parcelas"></td>
+            <td class="pag-excluir">🗑️</td>
+        </tr>`
+    });
+    document.getElementById('pagamentos-lancados').querySelector('tbody').innerHTML = html
+}
+// Forma de pagamento - fim

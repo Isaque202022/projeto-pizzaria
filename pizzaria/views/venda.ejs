@@ -40,26 +40,137 @@
         </div>
         <div class="esconder" id="corpo-navegacao-pagamento">
             <div class="formulario">
-                <label for="dinheiro">Dinheiro:</label>
-                <input id="dinheiro" placeholder="00,00">
-
-                <label for="pix">Pix:</label>
-                <input id="pix" placeholder="00,00">
-
-                <label for="cartao">Cartão:</label>
-                <div class="campos-cartao">
-                    <select id="cartao">
-                        <option value="">-- bandeira --</option>
-                        <option value="">ELO CRÉDITO</option>
-                        <option value="">ELO DÉBITO</option>
-                        <option value="">MASTER CRÉDITO</option>
-                        <option value="">MASTER DÉBITO</option>
-                        <option value="">VISA CRÉDITO</option>
-                        <option value="">VISA DÉBITO</option>
-                    </select>
-                    <input type="number" placeholder="00,00">
-                    <input type="number" placeholder="Parcelas">
+                <div>
+                    <label for="select-forma-pagamento">Forma de pagamento</label>
+                    <select id="select-forma-pagamento"></select>
                 </div>
+                <div>
+                    <label for="input-valor-pagamento">Valor</label>
+                    <input id="input-valor-pagamento">
+                </div>
+                <div>
+                    <label for="select-bandeira-pagamento">Bandeira</label>
+                    <select id="select-bandeira-pagamento"></select>
+                </div>
+                <div>
+                    <label for="input-parcelas-pagamento">Parcelas</label>
+                    <input id="input-parcelas-pagamento">
+                </div>
+                <button>Lançar</button>
+            </div>
+            <div id="pagamentos-lancados">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Forma de pagamento</th>
+                            <th>Valor</th>
+                            <th>Bandeira</th>
+                            <th>Parcelas</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pag-forma">dinheiro</td>
+                            <td class="pag-valor">565416560,00</td>
+                            <td class="pag-bandeira"></td>
+                            <td class="pag-parcelas"></td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        <tr>
+                            <td class="pag-forma">cartao</td>
+                            <td class="pag-valor">50,00</td>
+                            <td class="pag-bandeira">master credito</td>
+                            <td class="pag-parcelas">3</td>
+                            <td class="pag-excluir">🗑️</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
             </div>
             <div class="status">
                 <div id="total">TOTAL: <span>R$ 542,00</span></div>

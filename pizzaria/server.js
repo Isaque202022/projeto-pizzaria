@@ -3,7 +3,7 @@ const app = express()
 const database = require('better-sqlite3')
 const db = new database('meubanco.db')
 
-// db.exec('DROP TABLE CLIENTES')
+
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS CLIENTES (

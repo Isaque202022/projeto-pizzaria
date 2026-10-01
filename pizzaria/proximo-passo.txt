@@ -10,5 +10,7 @@ Na tela de vendas...
 7 (ok) - resolver problema: ao adicionar um mesmo produto duas vezes ao carrinho, e depois editar um desses dois e salvar, o programa está editando os dois itens no carrinho e não um só!
 
 Na tela de pagamento...
-1 - Mudar a tela de pagamento para o layout que criei no MockFlow
-2 - criar as mascaras dos inputs
+1 (ok) - Mudar a tela de pagamento para o layout que criei no MockFlow
+2 (ok) - criar as mascaras dos inputs
+3 - preencher os selects
+4 - criar a funcao de lançar
