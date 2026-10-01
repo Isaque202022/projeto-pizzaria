@@ -46,17 +46,17 @@
                 </div>
                 <div>
                     <label for="input-valor-pagamento">Valor</label>
-                    <input id="input-valor-pagamento">
+                    <input id="input-valor-pagamento" placeholder="0,00">
                 </div>
                 <div>
                     <label for="select-bandeira-pagamento">Bandeira</label>
-                    <select id="select-bandeira-pagamento"></select>
+                    <select id="select-bandeira-pagamento" disabled></select>
                 </div>
                 <div>
                     <label for="input-parcelas-pagamento">Parcelas</label>
-                    <input id="input-parcelas-pagamento">
+                    <input id="input-parcelas-pagamento" placeholder="0" disabled>
                 </div>
-                <button>Lançar</button>
+                <button onclick="lancarPagamento()">Lançar</button>
             </div>
             <div id="pagamentos-lancados">
                 <table>

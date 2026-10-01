@@ -17,7 +17,7 @@ const imaskOptions = {
     },
     qtd: {
         mask: /^\d*$/,
-        scale: 0
+        scale: 0,
     }
 }
 let carrinhoItemIdDisponivel = []
@@ -28,14 +28,14 @@ const formatoMoeda = Intl.NumberFormat("pt-BR", {
 let edicaoInputs = {}
 const optionsSelectPagamento = {
     bandeiras: [
-        {id:1, bandeira: 'ELO', cartao: 'CRÉDITO'},
-        {id:2, bandeira: 'ELO', cartao: 'DÉBITO'},
-        {id:3, bandeira: 'MASTERCARD', cartao: 'CRÉDITO'},
-        {id:4, bandeira: 'MASTERCARD', cartao: 'DÉBITO'},
-        {id:5, bandeira: 'VISA', cartao: 'CRÉDITO'},
-        {id:6, bandeira: 'VISA', cartao: 'DÉBITO'},
+        {id:1, bandeira: 'ELO CRÉDITO'},
+        {id:2, bandeira: 'ELO DÉBITO'},
+        {id:3, bandeira: 'MASTERCARD CRÉDITO'},
+        {id:4, bandeira: 'MASTERCARD DÉBITO'},
+        {id:5, bandeira: 'VISA CRÉDITO'},
+        {id:6, bandeira: 'VISA DÉBITO'},
     ],
-    forma: [
+    formas: [
         {id:1, forma:'DINHEIRO'},
         {id:2, forma:'PIX'},
         {id:3, forma:'CARTÃO'},
@@ -43,6 +43,7 @@ const optionsSelectPagamento = {
 }
 const elementosPagamento = {}
 let pagamentosLancados = []
+let idsDisponiveisPagamentos = []
 
 navBtns.forEach(nav => {
     nav.addEventListener('click', ()=>{
@@ -235,22 +236,67 @@ function removerFromCart(){
 
 // Forma de pagamento - início
 elementosPagamento.selectForma = document.getElementById('select-forma-pagamento')
-elementosPagamento.inputMaksValor = IMask(document.getElementById('input-valor-pagamento'),imaskOptions.valor)
+elementosPagamento.inputValor = document.getElementById('input-valor-pagamento')
+elementosPagamento.inputMaskValor = IMask(elementosPagamento.inputValor,imaskOptions.valor)
 elementosPagamento.selectBandeira = document.getElementById('select-bandeira-pagamento')
-elementosPagamento.inputMaskParcelas = IMask(document.getElementById('input-parcelas-pagamento'),imaskOptions.qtd)
+elementosPagamento.inputParcelas = document.getElementById('input-parcelas-pagamento')
+elementosPagamento.inputMaskParcelas = IMask(elementosPagamento.inputParcelas,imaskOptions.qtd)
+
+// preencher selects
+elementosPagamento.selectForma.innerHTML = '<option value-=""></option>'
+optionsSelectPagamento.formas.forEach(forma => {
+    const opt = document.createElement('option')
+    opt.value = forma.id
+    opt.innerText = forma.forma
+    elementosPagamento.selectForma.appendChild(opt)
+});
+elementosPagamento.selectBandeira.innerHTML = '<option value-=""></option>'
+optionsSelectPagamento.bandeiras.forEach(bandeira => {
+    const opt = document.createElement('option')
+    opt.value = bandeira.id
+    opt.innerText = bandeira.bandeira
+    elementosPagamento.selectBandeira.appendChild(opt)
+});
 
 function renderizarPagamentosLancados() {
     let html = ''
-    pagamentosLancados.forEach(pagamento => {
+    pagamentosLancados.forEach(pag => {
         html += `
         <tr>
-            <td class="pag-forma">dinheiro</td>
-            <td class="pag-valor">565416560,00</td>
-            <td class="pag-bandeira"></td>
-            <td class="pag-parcelas"></td>
+            <td class="pag-forma">
+            ${optionsSelectPagamento.formas.find(forma => forma.id == pag.forma)?.forma || 'Não existe'}
+            </td>
+            <td class="pag-valor">${formatoMoeda.format(pag.valor)}</td>
+            <td class="pag-bandeira">
+            ${pag.bandeira ? 
+                (optionsSelectPagamento.bandeiras.find(
+                    band => band.id == pag.bandeira
+                )?.bandeira || 'Não existe') : ''}
+            </td>
+            <td class="pag-parcelas">${pag.parcelas? pag.parcelas : ''}</td>
             <td class="pag-excluir">🗑️</td>
         </tr>`
     });
     document.getElementById('pagamentos-lancados').querySelector('tbody').innerHTML = html
 }
+renderizarPagamentosLancados()
+function lancarPagamento(){
+    const pagamento = {
+        forma: elementosPagamento.selectForma.value,
+        valor: Number(elementosPagamento.inputMaskValor.unmaskedValue),
+        bandeira: elementosPagamento.selectBandeira.disabled? null : elementosPagamento.selectBandeira.value,
+        parcelas: elementosPagamento.inputParcelas.disabled? null : Number(elementosPagamento.inputMaskParcelas.value)
+    }
+
+    if (idsDisponiveisPagamentos.length) {
+        pagamento.id = idsDisponiveisPagamentos[0]
+        idsDisponiveisPagamentos.splice(0,1)
+    } else {
+        pagamento.id = pagamentosLancados.length
+    }    
+    console.log(pagamento)
+    pagamentosLancados.push(pagamento)
+    renderizarPagamentosLancados()
+}
+
 // Forma de pagamento - fim

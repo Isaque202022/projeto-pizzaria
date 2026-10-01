@@ -12,5 +12,7 @@ Na tela de vendas...
 Na tela de pagamento...
 1 (ok) - Mudar a tela de pagamento para o layout que criei no MockFlow
 2 (ok) - criar as mascaras dos inputs
-3 - preencher os selects
-4 - criar a funcao de lançar
+3 (ok) - preencher os selects
+4 (ok) - criar a funcao de lançar
+5 - ao escolher cartao, liberar o select de bandeiras
+6 - ao escolher opcao de cartao de credito, liberar input parcelas
