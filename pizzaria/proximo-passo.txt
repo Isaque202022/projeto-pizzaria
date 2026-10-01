@@ -7,4 +7,8 @@ Na tela de vendas...
 4 (ok) - criar mascara dos inputs da edicao
 5 (ok) - criar listeners para os dois inputs da edicao (keyup) e handle enter (pois será assim que salvará as modificações de edição)
 6 (ok) - na edicao, quando clicar em enter, chama uma funcao de salvarEdicao(), e dentro dela primeiro chama uma outra funcao de validar os campos
-7 - resolver problema: ao adicionar um mesmo produto duas vezes ao carrinho, e depois editar um desses dois e salvar, o programa está editando os dois itens no carrinho e não um só!
+7 (ok) - resolver problema: ao adicionar um mesmo produto duas vezes ao carrinho, e depois editar um desses dois e salvar, o programa está editando os dois itens no carrinho e não um só!
+
+Na tela de pagamento...
+1 - Mudar a tela de pagamento para o layout que criei no MockFlow
+2 - criar as mascaras dos inputs

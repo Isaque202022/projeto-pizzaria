@@ -1,3 +1,4 @@
+// Geral - início
 const navBtns = document.querySelectorAll('.nav-btn')
 navBtns[0].classList.add('navegacao-selected')
 let btnPaginaAberta = navBtns[0]
@@ -25,7 +26,26 @@ navBtns.forEach(nav => {
         fecharEdicaoCarrinho()
     })
 })
+function selecionarItem(id, linha){
+    if (!editandoLinhaE.classList.contains('esconder')) return
+    const previamenteSelecionado = document.querySelector('.selecionado')
+    if (previamenteSelecionado) previamenteSelecionado.classList.remove('selecionado')
+    if (typeof(id) === 'undefined') {
+        idItemSelecionado = null;
+        return
+    }
+    linha.classList.add('selecionado')
+    idItemSelecionado = id
+}
+async function main(){
+    await pegarProdutos()
+    renderizarProdutos()
+    renderizarCarrinho()
+}
+main()
+// Geral - fim
 
+// Cardápio - início
 async function pegarProdutos(){
     try {
         const resposta = await fetch('/produtos')
@@ -61,7 +81,7 @@ function addToCart(){
         alert('Selecione um item do cardápio primeiro.')
         return
     }
-    const produto = produtos.find((produto) => produto.id_produto == idItemSelecionado)
+    const produto = { ...produtos.find((produto) => produto.id_produto == idItemSelecionado)}
     produto.quantidade = 1
 
     if (carrinhoItemIdDisponivel.length){
@@ -74,26 +94,32 @@ function addToCart(){
     carrinho.push(produto)
     selecionarItem()
     renderizarCarrinho()
+    console.log(JSON.stringify(carrinho, null, 2))
 }
-function validarCamposEditCart(){
-    if (!Number(edicaoInputs.maskQtd.unmaskedValue)) {
-        alert('Campo QUANTIDADE inválido!')
-        return false;
-    }
-    if (!Number(edicaoInputs.maskValor.unmaskedValue)) {
-        alert('Campo VALOR inválido!')   
-        return false;
-    }
-    return true;
-}
-function salvarEdicao(id,qtd,valor){
-    if(!validarCamposEditCart()) return
-    const index = carrinho.findIndex(item => item.id_item_carrinho == id)
-    carrinho[index].valor = valor
-    carrinho[index].quantidade = qtd
-    fecharEdicaoCarrinho()
-    selecionarItem()
-    renderizarCarrinho()
+// Cardápio - fim
+
+// Carrinho - início
+function renderizarCarrinho(){
+    let html = ''
+    let totalGeral = 0
+    carrinho.forEach((produto,index) =>{
+        html += `
+        <tr onclick="selecionarItem(${produto.id_item_carrinho},this)">
+            <td class="prod-num-item">${index+1}</td>
+            <td class="prod-id">${produto.id_produto}</td>
+            <td class="prod-desc">${produto.descricao}</td>
+            <td class="prod-valor">${
+                formatoMoeda.format(produto.valor)
+            }</td>
+            <td class="prod-quant">${produto.quantidade}</td>
+            <td class="prod-total">${
+                formatoMoeda.format(Math.round(produto.valor * 100 * produto.quantidade)/100)
+            }</td>
+        </tr>`
+        totalGeral += Math.round(produto.valor * 100 * produto.quantidade)/100
+    })
+    document.getElementById('corpo-navegacao-carrinho').querySelector('tbody').innerHTML = html
+    document.getElementById('carrinho-total-geral').innerText = 'R$ '+formatoMoeda.format(Math.round(totalGeral*100)/100)
 }
 function editarCarrinho(){
     if (idItemSelecionado == null) {
@@ -101,7 +127,7 @@ function editarCarrinho(){
         return
     }
     editandoLinhaE.classList.remove('esconder')
-    const produto = produtos.find((produto) => produto.id_item_carrinho == idItemSelecionado)
+    const produto = carrinho.find((produto) => produto.id_item_carrinho == idItemSelecionado)
     editandoLinhaE.innerHTML = `
         <th></th>
         <th>${produto.id_produto}</th>
@@ -142,6 +168,26 @@ function editarCarrinho(){
     edicaoInputs.qtd.addEventListener('keyup', inputModificado)
     edicaoInputs.valor.addEventListener('keyup', inputModificado)
 }
+function salvarEdicao(id,qtd,valor){
+    if(!validarCamposEditCart()) return
+    const index = carrinho.findIndex(item => item.id_item_carrinho == id)
+    carrinho[index].valor = valor
+    carrinho[index].quantidade = qtd
+    fecharEdicaoCarrinho()
+    selecionarItem()
+    renderizarCarrinho()
+}
+function validarCamposEditCart(){
+    if (!Number(edicaoInputs.maskQtd.unmaskedValue)) {
+        alert('Campo QUANTIDADE inválido!')
+        return false;
+    }
+    if (!Number(edicaoInputs.maskValor.unmaskedValue)) {
+        alert('Campo VALOR inválido!')   
+        return false;
+    }
+    return true;
+}
 function fecharEdicaoCarrinho(){
     idItemSelecionado = null
     editandoLinhaE.classList.add('esconder')
@@ -163,41 +209,4 @@ function removerFromCart(){
     selecionarItem()
     renderizarCarrinho()
 }
-function selecionarItem(id, linha){
-    if (!editandoLinhaE.classList.contains('esconder')) return
-    const previamenteSelecionado = document.querySelector('.selecionado')
-    if (previamenteSelecionado) previamenteSelecionado.classList.remove('selecionado')
-    if (typeof(id) === 'undefined') {
-        idItemSelecionado = null;
-        return
-    }
-    linha.classList.add('selecionado')
-    idItemSelecionado = id
-}
-function renderizarCarrinho(){
-    let html = ''
-    carrinho.forEach((produto,index) =>{
-        html += `
-        <tr onclick="selecionarItem(${produto.id_item_carrinho},this)">
-            <td class="prod-num-item">${index+1}</td>
-            <td class="prod-id">${produto.id_produto}</td>
-            <td class="prod-desc">${produto.descricao}</td>
-            <td class="prod-valor">${
-                formatoMoeda.format(produto.valor)
-            }</td>
-            <td class="prod-quant">${produto.quantidade}</td>
-            <td class="prod-total">${
-                formatoMoeda.format(produto.valor * produto.quantidade)
-            }</td>
-        </tr>`
-    })
-    document.getElementById('corpo-navegacao-carrinho').querySelector('tbody').innerHTML = html
-
-}
-renderizarCarrinho()
-
-async function main(){
-    await pegarProdutos()
-    renderizarProdutos()
-}
-main()
+// Carrinho - fim
