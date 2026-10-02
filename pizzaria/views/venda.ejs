@@ -25,6 +25,7 @@
         </div>
         <div class="container-obs">
             <textarea></textarea>
+            <img src="/imagens/pagina-venda/ampliar.png" alt="ampliar" onclick="ampliarObservacoes()">
         </div>
     </div>
     <div class="corpo">
@@ -70,114 +71,14 @@
                             <th>Excluir</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="pag-forma">dinheiro</td>
-                            <td class="pag-valor">565416560,00</td>
-                            <td class="pag-bandeira"></td>
-                            <td class="pag-parcelas"></td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        <tr>
-                            <td class="pag-forma">cartao</td>
-                            <td class="pag-valor">50,00</td>
-                            <td class="pag-bandeira">master credito</td>
-                            <td class="pag-parcelas">3</td>
-                            <td class="pag-excluir">🗑️</td>
-                        </tr>
-                        
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
             <div class="status">
-                <div id="total">TOTAL: <span>R$ 542,00</span></div>
-                <div id="recebido">RECEBIDO: <span>R$ 130,00</span></div>
-                <div id="falta">FALTA: <span>R$ 412,00</span></div>
-                <div id="troco">TROCO: <span>R$ 0,00</span></div>
+                <div id="status-total">TOTAL: <span>R$ 542,00</span></div>
+                <div id="status-recebido">RECEBIDO: <span>R$ 130,00</span></div>
+                <div id="status-falta">FALTA: <span>R$ 412,00</span></div>
+                <div id="status-troco">TROCO: <span>R$ 0,00</span></div>
             </div>
         </div>
 
@@ -233,6 +134,11 @@
             </div>
         </div>
     </div>
+
+    <!-- ampliar observações -->
+    <dialog id="modal-observacoes">
+        <textarea id="modal-textarea"></textarea>
+    </dialog>
 
     <script src="https://unpkg.com/imask"></script>
     <script src="/javascript/venda.js"></script>

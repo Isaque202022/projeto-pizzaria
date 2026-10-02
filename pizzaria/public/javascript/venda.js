@@ -44,6 +44,7 @@ const optionsSelectPagamento = {
 const elementosPagamento = {}
 let pagamentosLancados = []
 let idsDisponiveisPagamentos = []
+let totalCarrinho = 0
 
 navBtns.forEach(nav => {
     nav.addEventListener('click', ()=>{
@@ -126,14 +127,13 @@ function addToCart(){
     carrinho.push(produto)
     selecionarItem()
     renderizarCarrinho()
-    console.log(JSON.stringify(carrinho, null, 2))
 }
 // Cardápio - fim
 
 // Carrinho - início
 function renderizarCarrinho(){
     let html = ''
-    let totalGeral = 0
+    totalCarrinho = 0
     carrinho.forEach((produto,index) =>{
         html += `
         <tr onclick="selecionarItem(${produto.id_item_carrinho},this)">
@@ -148,10 +148,11 @@ function renderizarCarrinho(){
                 formatoMoeda.format(Math.round(produto.valor * 100 * produto.quantidade)/100)
             }</td>
         </tr>`
-        totalGeral += Math.round(produto.valor * 100 * produto.quantidade)/100
+        totalCarrinho += Math.round(produto.valor * 100 * produto.quantidade)/100
     })
     document.getElementById('corpo-navegacao-carrinho').querySelector('tbody').innerHTML = html
-    document.getElementById('carrinho-total-geral').innerText = 'R$ '+formatoMoeda.format(Math.round(totalGeral*100)/100)
+    document.getElementById('carrinho-total-geral').innerText = 'R$ '+formatoMoeda.format(Math.round(totalCarrinho*100)/100)
+    atualizarStatusPagamento()
 }
 function editarCarrinho(){
     if (idItemSelecionado == null) {
@@ -295,7 +296,7 @@ function renderizarPagamentosLancados() {
                 )?.bandeira || 'Não existe') : ''}
             </td>
             <td class="pag-parcelas">${pag.parcelas? pag.parcelas : ''}</td>
-            <td class="pag-excluir">🗑️</td>
+            <td class="pag-excluir" onclick="excluirPagamento(${pag.id})">🗑️</td>
         </tr>`
     });
     document.getElementById('pagamentos-lancados').querySelector('tbody').innerHTML = html
@@ -320,6 +321,7 @@ function lancarPagamento(){
     pagamentosLancados.push(pagamento)
     renderizarPagamentosLancados()
     limparFormularioPagamento()
+    atualizarStatusPagamento()
 }
 function ehCredito(valor){
     const texto = optionsSelectPagamento.bandeiras.find(b => b.id == valor)?.bandeira || ''
@@ -355,5 +357,49 @@ function limparFormularioPagamento(){
     elementosPagamento.selectBandeira.selectedIndex = 0
     elementosPagamento.selectForma.selectedIndex = 0
 }
+function excluirPagamento(id){
+    const index = pagamentosLancados.findIndex(p => p.id == id)
+    pagamentosLancados.splice(index,1)
+    renderizarPagamentosLancados()
+    atualizarStatusPagamento()
+}
+function atualizarStatusPagamento(){
+    const elementos = {
+        total: document.getElementById('status-total').querySelector('span'),
+        recebido: document.getElementById('status-recebido').querySelector('span'),
+        falta: document.getElementById('status-falta').querySelector('span'),
+        troco: document.getElementById('status-troco').querySelector('span'),
+    }
+    // total
+    
+    elementos.total.innerText = formatoMoeda.format(totalCarrinho)
+    let total = Math.round(totalCarrinho*100)
 
+    // recebido
+    let recebido = 0
+    pagamentosLancados.forEach(p => {
+        recebido += Math.round(p.valor * 100)
+    });
+    elementos.recebido.innerText = formatoMoeda.format(recebido/100)
+
+    // falta
+    let falta = 0
+    if (total > recebido){
+        falta = total - recebido
+    }
+    elementos.falta.innerText = formatoMoeda.format(falta/100)
+
+    // troco
+    let troco = 0
+    if (recebido > total){
+        troco = recebido - total
+    }
+    elementos.troco.innerText = formatoMoeda.format(troco/100)
+}
 // Forma de pagamento - fim
+
+// campo observações - inicio
+function ampliarObservacoes() {
+    // document.getElementById('modal-observacoes').open
+}
+// campo observações - fim

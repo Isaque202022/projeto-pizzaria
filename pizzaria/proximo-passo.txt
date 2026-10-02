@@ -14,5 +14,6 @@ Na tela de pagamento...
 2 (ok) - criar as mascaras dos inputs
 3 (ok) - preencher os selects
 4 (ok) - criar a funcao de lançar
-5 - ao escolher cartao, liberar o select de bandeiras
-6 - ao escolher opcao de cartao de credito, liberar input parcelas
+5 (ok) - ao escolher cartao, liberar o select de bandeiras
+6 (ok) - ao escolher opcao de cartao de credito, liberar input parcelas
+7 - excluir pagamento

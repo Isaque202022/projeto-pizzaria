@@ -42,11 +42,22 @@ body {
         }
     }
     .container-obs {
+        position: relative;
+        display: inline-block;
+        img {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 20px;
+            cursor: pointer;
+            z-index: 10;
+        }
         textarea {
             height: 100%;
             width: 400px;
             padding: 3px;
             resize: none;
+            box-sizing: border-box;
         }
     }
     .botoes, .container-obs {
@@ -56,6 +67,7 @@ body {
 
 .corpo {
     .barra-navegacao {
+        user-select: none;
         display: flex;
         justify-content: center;
         margin-top: 50px;
