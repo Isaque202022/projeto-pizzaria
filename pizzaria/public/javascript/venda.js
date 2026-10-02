@@ -258,6 +258,27 @@ optionsSelectPagamento.bandeiras.forEach(bandeira => {
     elementosPagamento.selectBandeira.appendChild(opt)
 });
 
+// ao selecionar o pagamento em cartao, permitir escolher a bandeira
+elementosPagamento.selectForma.addEventListener('change',()=>{
+    const id = elementosPagamento.selectForma.value
+    if (id == '3') { // cartao
+        elementosPagamento.selectBandeira.disabled = false
+    } else {
+        elementosPagamento.selectBandeira.selectedIndex = 0
+        elementosPagamento.selectBandeira.disabled = true
+        elementosPagamento.inputParcelas.disabled = true
+        elementosPagamento.inputMaskParcelas.typedValue = ''
+    }
+})
+// ao selecionar o cartao, se for de crédito, abilitar o input de parcelas
+elementosPagamento.selectBandeira.addEventListener('change',()=>{
+    if (!ehCredito(elementosPagamento.selectBandeira.value)) {
+        elementosPagamento.inputParcelas.disabled = true
+        elementosPagamento.inputMaskParcelas.typedValue = ''
+    } else {
+        elementosPagamento.inputParcelas.disabled = false
+    }
+})
 function renderizarPagamentosLancados() {
     let html = ''
     pagamentosLancados.forEach(pag => {
@@ -281,6 +302,7 @@ function renderizarPagamentosLancados() {
 }
 renderizarPagamentosLancados()
 function lancarPagamento(){
+    if (!validarCamposPagamento()) return
     const pagamento = {
         forma: elementosPagamento.selectForma.value,
         valor: Number(elementosPagamento.inputMaskValor.unmaskedValue),
@@ -297,6 +319,41 @@ function lancarPagamento(){
     console.log(pagamento)
     pagamentosLancados.push(pagamento)
     renderizarPagamentosLancados()
+    limparFormularioPagamento()
+}
+function ehCredito(valor){
+    const texto = optionsSelectPagamento.bandeiras.find(b => b.id == valor)?.bandeira || ''
+    if (texto.includes('CRÉDITO')) return true;
+    else return false;
+}
+function validarCamposPagamento() {
+    if (elementosPagamento.selectForma.value == ''){
+        alert('Escolha a forma de pagamento')
+        return false
+    }
+    if (!elementosPagamento.inputMaskValor.typedValue) {
+        alert('Informe o valor')
+        return false
+    }
+    if (elementosPagamento.selectForma.value == '3'){
+        if (elementosPagamento.selectBandeira.value == ''){
+            alert('Informe a bandeira do cartão')
+            return false
+        }
+        if (ehCredito(elementosPagamento.selectBandeira.value)){
+            if (!Number(elementosPagamento.inputMaskParcelas.typedValue)){
+                alert('Informe as parcelas')
+                return false
+            }
+        }
+    }
+    return true
+}
+function limparFormularioPagamento(){
+    elementosPagamento.inputMaskParcelas.typedValue = ''
+    elementosPagamento.inputMaskValor.typedValue = ''
+    elementosPagamento.selectBandeira.selectedIndex = 0
+    elementosPagamento.selectForma.selectedIndex = 0
 }
 
 // Forma de pagamento - fim

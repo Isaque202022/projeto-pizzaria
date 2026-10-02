@@ -127,6 +127,12 @@ body {
                 .pag-parcelas, .pag-excluir {
                     text-align: center;
                 }
+                .pag-excluir {
+                    cursor: pointer;
+                }
+                .pag-excluir:hover {
+                    background-color: rgba(224, 82, 25, 0.685);
+                }
             }
         }
         .status {
@@ -156,15 +162,28 @@ body {
         table {
             border-collapse: separate;
             border-spacing: 0;
-
-            td,th {
-                border: 1px solid black;
+            border: 1px solid rgba(0, 0, 0, 0.507);
+            border-bottom: none;
+            border-radius: 5px;
+            th {
+                border-bottom: 1px solid rgb(199, 198, 198);
+                border-right: 1px solid rgb(199, 198, 198);
                 padding: 5px;
+            }
+            td {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.507);
+                border-right: 1px solid rgba(0, 0, 0, 0.507);
+                padding: 5px;
+            }
+            td:last-child,
+            th:last-child {
+                border-right: none;
             }
             th {
                 position: sticky;
                 top: 0;
-                background-color: rgb(164, 179, 193);
+                background-color: rgb(76, 133, 185);
+                color: whitesmoke;
             }
             .prod-valor, .prod-id, .prod-quant, .prod-total {
                 text-align: right;
@@ -177,7 +196,7 @@ body {
             text-align: right;
         }
         .selecionado {
-            background-color: yellow;
+            background-color: rgb(242, 229, 48);
         }
         .editando-linha {
             input {
@@ -188,6 +207,7 @@ body {
             }
             th {
                 background-color: rgb(242, 229, 48);
+                color: black;
             }
             
         }
