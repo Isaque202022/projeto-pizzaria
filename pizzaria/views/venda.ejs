@@ -8,23 +8,33 @@
     
 </head>
 <body>
-    <a href="/">
-        <p id="voltar-homepage" title="Voltar à homepage">↩️</p>
-    </a>
+    
     <div class="cabecalho">
-        <div class="botoes">
-            <button>💾</button>
-            <button>🆕</button>
-            <button>🗂️</button>
+        <div class="comandos">
+            <div class="esquerdo">
+                <a href="/">
+                    <button id="voltar-homepage" title="Voltar à homepage">↩️</button>
+                </a>
+            </div>
+            <div class="direito">
+                <div class="botoes">
+                    <button onclick="mostrarClientes()">👤</button>
+                    <button onclick="salvarVenda()">💾</button>
+                    <button>🆕</button>
+                    <button>🗂️</button>
+                </div>
+                <div>
+                    <p>Cliente: 1 - Cliente balcão</p>
+                </div>
+            </div>
         </div>
         <div class="titulo-venda">
             <h1>Venda</h1>
-            <input type="text">
-            <h3>01/05/2025</h3>
-            
+            <input type="text" placeholder="id_venda...">
+            <h3 id="data"></h3>
         </div>
         <div class="container-obs">
-            <textarea></textarea>
+            <textarea id="observacao"></textarea>
             <img src="/imagens/pagina-venda/ampliar.png" alt="ampliar" onclick="ampliarObservacoes()">
         </div>
     </div>
@@ -138,6 +148,10 @@
     <!-- ampliar observações -->
     <dialog id="modal-observacoes">
         <textarea id="modal-textarea"></textarea>
+    </dialog>
+    <dialog id="modal-clientes">
+        <p>Lorem ipsum dolor sit amet consectetur</p><br>
+        
     </dialog>
 
     <script src="https://unpkg.com/imask"></script>

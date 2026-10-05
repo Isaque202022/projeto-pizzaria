@@ -1,4 +1,5 @@
 // Geral - início
+const venda = {}
 const navBtns = document.querySelectorAll('.nav-btn')
 navBtns[0].classList.add('navegacao-selected')
 let btnPaginaAberta = navBtns[0]
@@ -45,6 +46,13 @@ const elementosPagamento = {}
 let pagamentosLancados = []
 let idsDisponiveisPagamentos = []
 let totalCarrinho = 0
+const dataAtual = new Date()
+const data = {
+    dia: /^\d$/.test(dataAtual.getDate())? '0'+dataAtual.getDate() : dataAtual.getDate(),
+    mes: /^\d$/.test(dataAtual.getMonth()+1)? '0'+(dataAtual.getMonth()+1) : dataAtual.getMonth()+1,
+    ano: dataAtual.getFullYear()
+}
+document.getElementById('data').innerText = `${data.dia}/${data.mes}/${data.ano}`
 
 navBtns.forEach(nav => {
     nav.addEventListener('click', ()=>{
@@ -398,8 +406,61 @@ function atualizarStatusPagamento(){
 }
 // Forma de pagamento - fim
 
+
 // campo observações - inicio
 function ampliarObservacoes() {
     // document.getElementById('modal-observacoes').open
 }
 // campo observações - fim
+
+// botoes cabeçalho - inicio
+async function salvarVenda(){
+    if (carrinho.length == 0){
+        alert('Carrinho não pode estar vazio')
+        return
+    }
+    venda.data = `${data.ano}-${data.mes}-${data.dia}`
+    const obs = document.getElementById('observacao').value
+    venda.observacao = obs? obs : null
+
+    const dados = {
+        venda: venda,
+        carrinho: carrinho,
+        pagamento: pagamentosLancados
+    }
+
+    const resposta = await fetch('/vendas/new', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },        
+        body: JSON.stringify(dados)
+    })
+    const dataResponse = await resposta.json()
+    if (!dataResponse.ok){
+        alert('Não foi possível salvar a venda')
+        console.log(dataResponse.message)
+    } else {
+        alert(dataResponse.message)
+    }
+}   
+function mostrarClientes() {
+    const modal = document.getElementById('modal-clientes')
+    modal.showModal()
+    modal.addEventListener('click', (evento) => {
+        const r = modal.getBoundingClientRect();
+        
+        // Verifica se o clique foi fora das bordas do conteúdo do dialog
+        const clicouFora = (
+            evento.clientX < r.left ||
+            evento.clientX > r.right ||
+            evento.clientY < r.top ||
+            evento.clientY > r.bottom
+        );
+
+        if (clicouFora) {
+            modal.close();
+        }
+    });
+}
+// botoes cabeçalho - fim

@@ -4,21 +4,46 @@ const database = require('better-sqlite3')
 const db = new database('meubanco.db')
 
 
-
-db.exec(`
-  CREATE TABLE IF NOT EXISTS CLIENTES (
-    id_cliente INTEGER PRIMARY KEY,
-    nome TEXT NOT NULL,
-    cpf TEXT CHECK (length(cpf) = 11 AND cpf NOT GLOB '[%^0-9%]'),
-    telefone TEXT CHECK (length(telefone) = 11 AND telefone NOT GLOB '[%^0-9%]')
-  );
-  CREATE TABLE IF NOT EXISTS PRODUTOS (
-    id_produto INTEGER PRIMARY KEY,
-    descricao TEXT NOT NULL,
-    valor REAL NOT NULL
-  );
-`)
-
+try {
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS CLIENTES (
+      id_cliente INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL,
+      cpf TEXT CHECK (length(cpf) = 11 AND cpf NOT GLOB '[%^0-9%]'),
+      telefone TEXT CHECK (length(telefone) = 11 AND telefone NOT GLOB '[%^0-9%]')
+    );
+    CREATE TABLE IF NOT EXISTS PRODUTOS (
+      id_produto INTEGER PRIMARY KEY,
+      descricao TEXT NOT NULL,
+      valor REAL NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS VENDAS (
+      id_venda INTEGER PRIMARY KEY,
+      data TEXT NOT NULL CHECK (data GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
+      id_cliente INTEGER,
+      FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente)
+    );
+    CREATE TABLE IF NOT EXISTS PAGAMENTOS_VENDA (
+      id_pagamento INTEGER PRIMARY KEY,
+      forma_pagamento TEXT NOT NULL,
+      valor REAL NOT NULL,
+      cartao TEXT,
+      parcelas INTEGER,
+      id_venda INTEGER,
+      FOREIGN KEY (id_venda) REFERENCES VENDAS(id_venda)
+    );
+    CREATE TABLE IF NOT EXISTS ITENS_VENDA (
+      id_item_venda INTEGER PRIMARY KEY,
+      quantidade INTEGER NOT NULL,
+      id_venda INTEGER,
+      id_produto INTEGER,
+      FOREIGN KEY (id_venda) REFERENCES VENDAS(id_venda),
+      FOREIGN KEY (id_produto) REFERENCES PRODUTOS(id_produto)
+    );
+  `)
+} catch (erro) {
+  console.log(erro.message)
+}
 app.set('view engine','ejs')
 app.use(express.static('public'))
 app.use(express.json())
@@ -70,6 +95,15 @@ app.delete('/cliente/:id',(req,res) =>{
 // VENDAS
 app.get('/vendas/new',(req,res) =>{
   res.render('venda')
+})
+app.post('/vendas/new',(req,res) => {
+  try {
+    const dados = req.body
+    console.log(dados)
+    res.status(200).json({message: 'Venda salva com sucesso!'})
+  } catch (erro) {
+    res.status(400).json({message: erro.message})
+  }
 })
 // PRODUTO
 app.get('/formulario/produto',(req,res) =>{

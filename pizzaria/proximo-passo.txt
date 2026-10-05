@@ -16,4 +16,8 @@ Na tela de pagamento...
 4 (ok) - criar a funcao de lançar
 5 (ok) - ao escolher cartao, liberar o select de bandeiras
 6 (ok) - ao escolher opcao de cartao de credito, liberar input parcelas
-7 - excluir pagamento
+7 (ok) - excluir pagamento
+8 - fazer um fetch para pegar a lista de usuarios
+9 - fazer um modelo no mockflow do modal de usuarios
+10 - renderizar os usuarios no modal
+11 - criar funcionalidade de pesquisar usuarios
