@@ -150,8 +150,38 @@
         <textarea id="modal-textarea"></textarea>
     </dialog>
     <dialog id="modal-clientes">
-        <p>Lorem ipsum dolor sit amet consectetur</p><br>
-        
+        <p>👤 Clientes</p>
+        <div class="pesquisa">
+            <span>🔍</span>
+            <input type="text" placeholder="Pesquisar cliente...">
+        </div>
+        <div class="resultado-pesquisa">Foram encontrados 2 registros</div>
+        <div class="cliente">
+            <p>Selecionado:</p>
+            <p class="cliente-selecionado">1 - Isaque Sena de França Cunha</p>
+        </div>     
+        <div class="table-container">
+            <table id="table-clientes">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>id</th>
+                        <th>nome</th>
+                        <th>cpf</th>
+                        <th>telefone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>Isaque Sena de França Cunha</td>
+                        <td>078.149.345.59</td>
+                        <td>(75) 98862-9333</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>   
     </dialog>
 
     <script src="https://unpkg.com/imask"></script>

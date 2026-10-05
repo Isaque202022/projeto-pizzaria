@@ -1,5 +1,6 @@
 // Geral - início
 const venda = {}
+let clientes = []
 const navBtns = document.querySelectorAll('.nav-btn')
 navBtns[0].classList.add('navegacao-selected')
 let btnPaginaAberta = navBtns[0]
@@ -82,6 +83,8 @@ async function main(){
     await pegarProdutos()
     renderizarProdutos()
     renderizarCarrinho()
+    await pegarClientes()
+    selecionarCliente(1)
 }
 main()
 // Geral - fim
@@ -444,6 +447,11 @@ async function salvarVenda(){
         alert(dataResponse.message)
     }
 }   
+async function pegarClientes() {
+    const response = await fetch('/clientes')
+    const data = await response.json()
+    clientes = data
+}
 function mostrarClientes() {
     const modal = document.getElementById('modal-clientes')
     modal.showModal()
@@ -462,5 +470,27 @@ function mostrarClientes() {
             modal.close();
         }
     });
+    renderizarTabelaClientes()
 }
+function renderizarTabelaClientes() {
+    let html = ''
+    clientes.forEach((cliente,index) => {
+        html += `
+        <tr onclick="selecionarCliente(${cliente.id_cliente})">
+            <td>${index+1}</td>
+            <td>${cliente.id_cliente}</td>
+            <td>${cliente.nome}</td>
+            <td>${cliente.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4')}</td>
+            <td>${cliente.telefone.replace(/(\d{2})(\d{5})(\d{4})/,'($1) $2-$3')}</td>
+        </tr>`
+    })
+    document.getElementById('table-clientes').querySelector('tbody').innerHTML = html
+}
+function selecionarCliente(id){
+    venda.id_cliente = id
+    const cliente = clientes.find(c => c.id_cliente == id)
+    const elem = document.querySelector('.cliente-selecionado')
+    elem.innerText = `${id} - ${cliente.nome}`
+}
+
 // botoes cabeçalho - fim
