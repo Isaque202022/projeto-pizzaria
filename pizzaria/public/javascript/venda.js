@@ -114,7 +114,7 @@ function renderizarProdutos(){
             <td class="prod-id">${produto.id_produto}</td>
             <td class="prod-desc">${produto.descricao}</td>
             <td class="prod-valor">${
-                formatoMoeda.format(produto.valor)
+                formatoMoeda.format(produto.valor/100)
             }</td>
         </tr>`
     });
@@ -146,23 +146,24 @@ function renderizarCarrinho(){
     let html = ''
     totalCarrinho = 0
     carrinho.forEach((produto,index) =>{
+        let totalItem = produto.quantidade * produto.valor
         html += `
         <tr onclick="selecionarItem(${produto.id_item_carrinho},this)">
             <td class="prod-num-item">${index+1}</td>
             <td class="prod-id">${produto.id_produto}</td>
             <td class="prod-desc">${produto.descricao}</td>
             <td class="prod-valor">${
-                formatoMoeda.format(produto.valor)
+                formatoMoeda.format(produto.valor/100)
             }</td>
             <td class="prod-quant">${produto.quantidade}</td>
             <td class="prod-total">${
-                formatoMoeda.format(Math.round(produto.valor * 100 * produto.quantidade)/100)
+                formatoMoeda.format(totalItem/100)
             }</td>
         </tr>`
-        totalCarrinho += Math.round(produto.valor * 100 * produto.quantidade)/100
+        totalCarrinho += totalItem
     })
     document.getElementById('corpo-navegacao-carrinho').querySelector('tbody').innerHTML = html
-    document.getElementById('carrinho-total-geral').innerText = 'R$ '+formatoMoeda.format(Math.round(totalCarrinho*100)/100)
+    document.getElementById('carrinho-total-geral').innerText = 'R$ '+formatoMoeda.format(totalCarrinho/100)
     atualizarStatusPagamento()
 }
 function editarCarrinho(){
@@ -383,8 +384,8 @@ function atualizarStatusPagamento(){
     }
     // total
     
-    elementos.total.innerText = formatoMoeda.format(totalCarrinho)
-    let total = Math.round(totalCarrinho*100)
+    elementos.total.innerText = formatoMoeda.format(totalCarrinho/100)
+    let total = Math.round(totalCarrinho)
 
     // recebido
     let recebido = 0
@@ -491,6 +492,7 @@ function selecionarCliente(id){
     const cliente = clientes.find(c => c.id_cliente == id)
     const elem = document.querySelector('.cliente-selecionado')
     elem.innerText = `${id} - ${cliente.nome}`
+    document.getElementById('cliente-cabecalho').innerText = `Cliente: ${id} - ${cliente.nome}`
 }
 
 // botoes cabeçalho - fim

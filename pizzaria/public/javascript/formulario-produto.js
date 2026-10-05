@@ -35,11 +35,24 @@ function validarFormCampos(){
     }
     return true
 }
+function floatToCents(n) {
+    n = String(n)
+    if (/[.]/g.test(n)) {
+        n = n.replace(/(.*[.]\d\d).*/g,'$1')
+        if (/[.]\d$/g.test(n)){
+            n = n+'0'
+        } 
+        n =  n.replace('.','')
+    } else {
+        n =  n + '00'
+    }
+    return Number(n)
+}
 async function salvar(){
     if (!validarFormCampos()) return; 
 
     produto.descricao = formCampos.descricao.value.toUpperCase()
-    produto.valor = Number(mask.unmaskedValue)
+    produto.valor = floatToCents(mask.typedValue)
     if (JSON.stringify(produto) == JSON.stringify(produto_antes_da_edicao)) {
         limparEdicao()
         return;
@@ -100,7 +113,7 @@ function renderizarProdutos(){
         <tr class="produto">
             <td class="tb-produto-id">${produto.id_produto}</td>
             <td class="tb-produto-descricao">${produto.descricao}</td>
-            <td class="tb-produto-valor">${formatoMoeda.format(produto.valor)}</td>
+            <td class="tb-produto-valor">${formatoMoeda.format(produto.valor/100)}</td>
             <td class="tb-produto-editar">
                 <span onclick="editar(${produto.id_produto},this)">✏️</span>
             </td>
@@ -161,7 +174,7 @@ function editar(id,lapisEl){
     produto_antes_da_edicao = {...produto}
     formCampos.descricao.value = produto.descricao
     formCampos.descricao.focus()
-    mask.typedValue = produto.valor
+    mask.typedValue = produto.valor/100
     
     formCampos.btnCancelar.disabled = false
     formCampos.btnExcluir.disabled = false

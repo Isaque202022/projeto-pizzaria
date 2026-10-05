@@ -15,11 +15,12 @@ try {
     CREATE TABLE IF NOT EXISTS PRODUTOS (
       id_produto INTEGER PRIMARY KEY,
       descricao TEXT NOT NULL,
-      valor REAL NOT NULL
+      valor INTEGER NOT NULL
     );
     CREATE TABLE IF NOT EXISTS VENDAS (
       id_venda INTEGER PRIMARY KEY,
       data TEXT NOT NULL CHECK (data GLOB '[0-9][0-9][0-9][0-9]-[0-1][0-9]-[0-3][0-9]'),
+      observacao TEXT,
       id_cliente INTEGER,
       FOREIGN KEY (id_cliente) REFERENCES CLIENTES(id_cliente)
     );
@@ -35,8 +36,9 @@ try {
     CREATE TABLE IF NOT EXISTS ITENS_VENDA (
       id_item_venda INTEGER PRIMARY KEY,
       quantidade INTEGER NOT NULL,
-      id_venda INTEGER,
-      id_produto INTEGER,
+      valor INTEGER NOT NULL,
+      id_venda INTEGER NOT NULL,
+      id_produto INTEGER NOT NULL,
       FOREIGN KEY (id_venda) REFERENCES VENDAS(id_venda),
       FOREIGN KEY (id_produto) REFERENCES PRODUTOS(id_produto)
     );
@@ -96,10 +98,23 @@ app.delete('/cliente/:id',(req,res) =>{
 app.get('/vendas/new',(req,res) =>{
   res.render('venda')
 })
+function cadastrarNovaVenda(venda, carrinho, pagamentos){
+  // venda
+  let statement = db.prepare("INSERT INTO VENDAS (id_cliente, data, observacao) VALUES (?,?,?)")
+  const resultadoVenda = statement.run(venda.id_cliente, venda.data, venda.observacao)
+  const idUltimaVenda = resultadoVenda.lastInsertRowid;
+  // itens_venda
+  carrinho.forEach(car => {
+    
+  });
+  statement = db.prepare("INSERT INTO ITENS_VENDA (carrino) VALUES()")
+}
 app.post('/vendas/new',(req,res) => {
   try {
     const dados = req.body
     console.log(dados)
+    const idVenda = cadastrarNovaVenda(dados.venda, dados.carrinho, dados.pagamento)
+    
     res.status(200).json({message: 'Venda salva com sucesso!'})
   } catch (erro) {
     res.status(400).json({message: erro.message})
