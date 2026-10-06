@@ -6,6 +6,25 @@ const db = new database('meubanco.db')
 
 try {
   db.exec(`
+    CREATE TABLE IF NOT EXISTS FORMAS_PAGAMENTO (
+      id_forma_pagamento INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL
+    );
+    INSERT INTO FORMAS_PAGAMENTO (nome) VALUES 
+    ('DINHEIRO'),
+    ('PIX'),
+    ('CARTÃO');
+    CREATE TABLE IF NOT EXISTS CARTOES (
+      id_cartao INTEGER PRIMARY KEY,
+      nome TEXT NOT NULL
+    );
+    INSERT INTO CARTOES (nome) VALUES 
+    ('ELO CRÉDITO'),
+    ('ELO DÉBITO'),
+    ('MASTERCARD CRÉDITO'),
+    ('MASTERCARD DÉBITO'),
+    ('VISA CRÉDITO'),
+    ('VISA DÉBITO');
     CREATE TABLE IF NOT EXISTS CLIENTES (
       id_cliente INTEGER PRIMARY KEY,
       nome TEXT NOT NULL,
@@ -26,9 +45,9 @@ try {
     );
     CREATE TABLE IF NOT EXISTS PAGAMENTOS_VENDA (
       id_pagamento INTEGER PRIMARY KEY,
-      forma_pagamento TEXT NOT NULL,
-      valor REAL NOT NULL,
-      cartao TEXT,
+      forma_pagamento INTEGER NOT NULL,
+      valor INTEGER NOT NULL,
+      cartao INTEGER,
       parcelas INTEGER,
       id_venda INTEGER,
       FOREIGN KEY (id_venda) REFERENCES VENDAS(id_venda)
@@ -44,6 +63,7 @@ try {
     );
   `)
 } catch (erro) {
+  console.log('erro ao executar comandos sqlite linha 68')
   console.log(erro.message)
 }
 app.set('view engine','ejs')
@@ -98,22 +118,39 @@ app.delete('/cliente/:id',(req,res) =>{
 app.get('/vendas/new',(req,res) =>{
   res.render('venda')
 })
-function cadastrarNovaVenda(venda, carrinho, pagamentos){
+app.get('/vendas/opcoes-pagamento',(req,res) => {
+  // pegar formas de pagamento e cartoes
+  const cartoes = db.prepare('SELECT * FROM CARTOES').all()
+  const formas_pagamento = db.prepare('SELECT * FROM FORMAS_PAGAMENTO').all()
+  res.json({
+    cartoes: cartoes,
+    formas_pagamento: formas_pagamento
+  })
+})
+const cadastrarNovaVenda = db.transaction((venda, carrinho, pagamento)=>{
   // venda
   let statement = db.prepare("INSERT INTO VENDAS (id_cliente, data, observacao) VALUES (?,?,?)")
   const resultadoVenda = statement.run(venda.id_cliente, venda.data, venda.observacao)
   const idUltimaVenda = resultadoVenda.lastInsertRowid;
   // itens_venda
-  carrinho.forEach(car => {
-    
+  statement = db.prepare("INSERT INTO ITENS_VENDA (id_venda, id_produto,valor,quantidade) VALUES(?,?,?,?)")
+  carrinho.forEach(item => {
+    statement.run(idUltimaVenda, item.id_produto, item.valor, item.quantidade)
   });
-  statement = db.prepare("INSERT INTO ITENS_VENDA (carrino) VALUES()")
-}
+  // pagamento
+  statement = db.prepare("INSERT INTO PAGAMENTOS_VENDA (id_venda, forma_pagamento, valor, cartao, parcelas) VALUES(?,?,?,?,?)")
+  pagamento.forEach(p => {
+    statement.run(idUltimaVenda, p.forma, p.valor, p.bandeira, p.parcelas)
+  });
+  
+})
+
+
 app.post('/vendas/new',(req,res) => {
   try {
     const dados = req.body
     console.log(dados)
-    const idVenda = cadastrarNovaVenda(dados.venda, dados.carrinho, dados.pagamento)
+    cadastrarNovaVenda(dados.venda, dados.carrinho, dados.pagamento)
     
     res.status(200).json({message: 'Venda salva com sucesso!'})
   } catch (erro) {

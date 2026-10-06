@@ -30,17 +30,17 @@ const formatoMoeda = Intl.NumberFormat("pt-BR", {
 let edicaoInputs = {}
 const optionsSelectPagamento = {
     bandeiras: [
-        {id:1, bandeira: 'ELO CRÉDITO'},
-        {id:2, bandeira: 'ELO DÉBITO'},
-        {id:3, bandeira: 'MASTERCARD CRÉDITO'},
-        {id:4, bandeira: 'MASTERCARD DÉBITO'},
-        {id:5, bandeira: 'VISA CRÉDITO'},
-        {id:6, bandeira: 'VISA DÉBITO'},
+        // {id:1, bandeira: 'ELO CRÉDITO'},
+        // {id:2, bandeira: 'ELO DÉBITO'},
+        // {id:3, bandeira: 'MASTERCARD CRÉDITO'},
+        // {id:4, bandeira: 'MASTERCARD DÉBITO'},
+        // {id:5, bandeira: 'VISA CRÉDITO'},
+        // {id:6, bandeira: 'VISA DÉBITO'},
     ],
     formas: [
-        {id:1, forma:'DINHEIRO'},
-        {id:2, forma:'PIX'},
-        {id:3, forma:'CARTÃO'},
+        // {id:1, forma:'DINHEIRO'},
+        // {id:2, forma:'PIX'},
+        // {id:3, forma:'CARTÃO'},
     ]
 }
 const elementosPagamento = {}
@@ -79,12 +79,20 @@ function selecionarItem(id, linha){
     linha.classList.add('selecionado')
     idItemSelecionado = id
 }
+async function pegarOpcoesPagamento(){
+    const resposta = await fetch('/vendas/opcoes-pagamento')
+    const dados = await resposta.json()
+    optionsSelectPagamento.bandeiras = dados.cartoes
+    optionsSelectPagamento.formas = dados.formas_pagamento
+}
 async function main(){
     await pegarProdutos()
     renderizarProdutos()
     renderizarCarrinho()
     await pegarClientes()
     selecionarCliente(1)
+    await pegarOpcoesPagamento()
+    preencherSelectsPag()
 }
 main()
 // Geral - fim
@@ -256,20 +264,22 @@ elementosPagamento.inputParcelas = document.getElementById('input-parcelas-pagam
 elementosPagamento.inputMaskParcelas = IMask(elementosPagamento.inputParcelas,imaskOptions.qtd)
 
 // preencher selects
-elementosPagamento.selectForma.innerHTML = '<option value-=""></option>'
-optionsSelectPagamento.formas.forEach(forma => {
-    const opt = document.createElement('option')
-    opt.value = forma.id
-    opt.innerText = forma.forma
-    elementosPagamento.selectForma.appendChild(opt)
-});
-elementosPagamento.selectBandeira.innerHTML = '<option value-=""></option>'
-optionsSelectPagamento.bandeiras.forEach(bandeira => {
-    const opt = document.createElement('option')
-    opt.value = bandeira.id
-    opt.innerText = bandeira.bandeira
-    elementosPagamento.selectBandeira.appendChild(opt)
-});
+function preencherSelectsPag(){
+    elementosPagamento.selectForma.innerHTML = '<option value=""></option>'
+    optionsSelectPagamento.formas.forEach(forma => {
+        const opt = document.createElement('option')
+        opt.value = forma.id_forma_pagamento
+        opt.innerText = forma.nome
+        elementosPagamento.selectForma.appendChild(opt)
+    });
+    elementosPagamento.selectBandeira.innerHTML = '<option value=""></option>'
+    optionsSelectPagamento.bandeiras.forEach(bandeira => {
+        const opt = document.createElement('option')
+        opt.value = bandeira.id_cartao
+        opt.innerText = bandeira.nome
+        elementosPagamento.selectBandeira.appendChild(opt)
+    });
+}
 
 // ao selecionar o pagamento em cartao, permitir escolher a bandeira
 elementosPagamento.selectForma.addEventListener('change',()=>{
@@ -298,14 +308,14 @@ function renderizarPagamentosLancados() {
         html += `
         <tr>
             <td class="pag-forma">
-            ${optionsSelectPagamento.formas.find(forma => forma.id == pag.forma)?.forma || 'Não existe'}
+            ${optionsSelectPagamento.formas.find(forma => forma.id_forma_pagamento == pag.forma)?.nome || 'Não existe'}
             </td>
-            <td class="pag-valor">${formatoMoeda.format(pag.valor)}</td>
+            <td class="pag-valor">${formatoMoeda.format(pag.valor/100)}</td>
             <td class="pag-bandeira">
             ${pag.bandeira ? 
                 (optionsSelectPagamento.bandeiras.find(
-                    band => band.id == pag.bandeira
-                )?.bandeira || 'Não existe') : ''}
+                    band => band.id_cartao == pag.bandeira
+                )?.nome || 'Não existe') : ''}
             </td>
             <td class="pag-parcelas">${pag.parcelas? pag.parcelas : ''}</td>
             <td class="pag-excluir" onclick="excluirPagamento(${pag.id})">🗑️</td>
@@ -318,9 +328,14 @@ function lancarPagamento(){
     if (!validarCamposPagamento()) return
     const pagamento = {
         forma: elementosPagamento.selectForma.value,
-        valor: Number(elementosPagamento.inputMaskValor.unmaskedValue),
+        valor: floatToCents(elementosPagamento.inputMaskValor.typedValue),
         bandeira: elementosPagamento.selectBandeira.disabled? null : elementosPagamento.selectBandeira.value,
         parcelas: elementosPagamento.inputParcelas.disabled? null : Number(elementosPagamento.inputMaskParcelas.value)
+    }
+    if (pagamento.forma != '') pagamento.forma = Number(pagamento.forma);
+    if (pagamento.bandeira == '') pagamento.bandeira = null;
+    else {
+        pagamento.bandeira = Number(pagamento.bandeira)
     }
 
     if (idsDisponiveisPagamentos.length) {
@@ -336,7 +351,7 @@ function lancarPagamento(){
     atualizarStatusPagamento()
 }
 function ehCredito(valor){
-    const texto = optionsSelectPagamento.bandeiras.find(b => b.id == valor)?.bandeira || ''
+    const texto = optionsSelectPagamento.bandeiras.find(b => b.id_cartao == valor)?.nome || ''
     if (texto.includes('CRÉDITO')) return true;
     else return false;
 }
@@ -390,7 +405,7 @@ function atualizarStatusPagamento(){
     // recebido
     let recebido = 0
     pagamentosLancados.forEach(p => {
-        recebido += Math.round(p.valor * 100)
+        recebido += p.valor
     });
     elementos.recebido.innerText = formatoMoeda.format(recebido/100)
 
@@ -407,6 +422,19 @@ function atualizarStatusPagamento(){
         troco = recebido - total
     }
     elementos.troco.innerText = formatoMoeda.format(troco/100)
+}
+function floatToCents(n) {
+    n = String(n)
+    if (/[.]/g.test(n)) {
+        n = n.replace(/(.*[.]\d\d).*/g,'$1')
+        if (/[.]\d$/g.test(n)){
+            n = n+'0'
+        } 
+        n =  n.replace('.','')
+    } else {
+        n =  n + '00'
+    }
+    return Number(n)
 }
 // Forma de pagamento - fim
 
@@ -441,8 +469,8 @@ async function salvarVenda(){
         body: JSON.stringify(dados)
     })
     const dataResponse = await resposta.json()
-    if (!dataResponse.ok){
-        alert('Não foi possível salvar a venda')
+    if (!resposta.ok){
+        alert('Não foi possível salvar a venda\n'+resposta.ok)
         console.log(dataResponse.message)
     } else {
         alert(dataResponse.message)

@@ -20,5 +20,8 @@ Na tela de pagamento...
 8 (ok) - fazer um fetch para pegar a lista de clientes
 9 (ok) - fazer um modelo no mockflow do modal de clientes
 10 (ok) - renderizar os clientes no modal
-11 - pesquisar sobre transaction no better-sqlite3 para salvar a nova venda no banco
-12 - criar funcionalidade de pesquisar clientes
+11 - quando nao houver bandeira, nao pode transformar em zero, e sim em null
+12 - tem detalhes nessa tela que ainda está mostrando em centavos como o editar valor carrinho
+
+pesquisar sobre transaction no better-sqlite3 para salvar a nova venda no banco
+criar funcionalidade de pesquisar clientes
