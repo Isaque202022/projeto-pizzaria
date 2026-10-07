@@ -10,21 +10,10 @@ try {
       id_forma_pagamento INTEGER PRIMARY KEY,
       nome TEXT NOT NULL
     );
-    INSERT INTO FORMAS_PAGAMENTO (nome) VALUES 
-    ('DINHEIRO'),
-    ('PIX'),
-    ('CARTÃO');
     CREATE TABLE IF NOT EXISTS CARTOES (
       id_cartao INTEGER PRIMARY KEY,
       nome TEXT NOT NULL
     );
-    INSERT INTO CARTOES (nome) VALUES 
-    ('ELO CRÉDITO'),
-    ('ELO DÉBITO'),
-    ('MASTERCARD CRÉDITO'),
-    ('MASTERCARD DÉBITO'),
-    ('VISA CRÉDITO'),
-    ('VISA DÉBITO');
     CREATE TABLE IF NOT EXISTS CLIENTES (
       id_cliente INTEGER PRIMARY KEY,
       nome TEXT NOT NULL,
@@ -63,7 +52,7 @@ try {
     );
   `)
 } catch (erro) {
-  console.log('erro ao executar comandos sqlite linha 68')
+  console.log('erro ao executar comandos sqlite linha 55')
   console.log(erro.message)
 }
 app.set('view engine','ejs')

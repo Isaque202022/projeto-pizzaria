@@ -186,10 +186,10 @@ function editarCarrinho(){
         <th>${produto.id_produto}</th>
         <th>${produto.descricao}</th>
         <th><input id="carrinho-edit-valor" value="${
-            formatoMoeda.format(produto.valor)
+            formatoMoeda.format(produto.valor/100)
         }"></th>
         <th><input id="carrinho-edit-qtd" value="${produto.quantidade}"></th>
-        <th id="carrinho-edit-total">${formatoMoeda.format(produto.valor * produto.quantidade)}</th>
+        <th id="carrinho-edit-total">${formatoMoeda.format(produto.valor * produto.quantidade/100)}</th>
     `;   
     document.getElementById('btn-cancelar-edicao').classList.remove('esconder') 
     // criar as mascaras dos inputs de editar item carrinho
@@ -201,10 +201,10 @@ function editarCarrinho(){
     edicaoInputs.qtd.select()
     function inputModificado(evento) {
         let [valor,qtd] = [
-            Number(edicaoInputs.maskValor.unmaskedValue), 
-            Number(edicaoInputs.maskQtd.unmaskedValue)
+            floatToCents(edicaoInputs.maskValor.typedValue), 
+            edicaoInputs.maskQtd.typedValue
         ]
-        document.getElementById('carrinho-edit-total').innerText = formatoMoeda.format(Math.round(valor * 100 * qtd)/100)
+        document.getElementById('carrinho-edit-total').innerText = formatoMoeda.format(valor * qtd /100)
         if (evento.key == 'Enter') {
             salvarEdicao(idItemSelecionado,qtd,valor)
         }
@@ -220,6 +220,7 @@ function salvarEdicao(id,qtd,valor){
     fecharEdicaoCarrinho()
     selecionarItem()
     renderizarCarrinho()
+    idItemSelecionado = null
 }
 function validarCamposEditCart(){
     if (!Number(edicaoInputs.maskQtd.unmaskedValue)) {
@@ -243,6 +244,10 @@ function fecharEdicaoCarrinho(){
 function removerFromCart(){
     if (idItemSelecionado == null) {
         alert('Selecione um item do carrinho primeiro.')
+        return
+    }
+    if (!editandoLinhaE.classList.contains('esconder')) {
+        alert('Termine a edição primeiro antes de excluir.')
         return
     }
     const indiceParaRemover = carrinho.findIndex(prod => prod.id_item_carrinho == idItemSelecionado)
@@ -332,11 +337,11 @@ function lancarPagamento(){
         bandeira: elementosPagamento.selectBandeira.disabled? null : elementosPagamento.selectBandeira.value,
         parcelas: elementosPagamento.inputParcelas.disabled? null : Number(elementosPagamento.inputMaskParcelas.value)
     }
+    console.log('pagamento:',pagamento.bandeira)
+    console.log(pagamento.bandeira == '')
     if (pagamento.forma != '') pagamento.forma = Number(pagamento.forma);
-    if (pagamento.bandeira == '') pagamento.bandeira = null;
-    else {
-        pagamento.bandeira = Number(pagamento.bandeira)
-    }
+    if (pagamento.bandeira != null) pagamento.bandeira = Number(pagamento.bandeira);
+
 
     if (idsDisponiveisPagamentos.length) {
         pagamento.id = idsDisponiveisPagamentos[0]
